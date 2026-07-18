@@ -16,14 +16,12 @@ public class PeerController {
 
     @GetMapping("/peers")
     public String peersAtivos() throws Exception {
-        //funcionalidades.peersAtivos();
+        funcionalidades.peersAtivos();
         return "Pedido de peers ativos enviado.";
     }
 
     @PostMapping("/share")
-    public String partilharFicheiro(
-            @RequestParam String caminho,
-            @RequestParam int replicacao) {
+    public String partilharFicheiro(@RequestParam String caminho, @RequestParam int replicacao) {
 
         // Vamos implementar depois
         return "Pedido para partilhar o ficheiro recebido.";

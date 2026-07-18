@@ -2,7 +2,7 @@ version: '3'
 services:
 
   gossip-router:
-    image: openjdk:11.0.1
+    image: openjdk:17.0.1
     container_name: gossip-router
     networks:
       - peerbox-network
@@ -13,7 +13,7 @@ services:
     command: java -cp /app/Peer_box_file-1.0-SNAPSHOT.jar org.jgroups.stack.GossipRouter -port 12001
 
   peer-node1:
-    image: openjdk:11.0.1
+    image: openjdk:17.0.1
     depends_on:
       - gossip-router
     networks:
@@ -24,7 +24,7 @@ services:
     command: java -jar /app/Peer_box_file-1.0-SNAPSHOT.jar
 
   peer-node2:
-    image: openjdk:11.0.1
+    image: openjdk:17.0.1
     depends_on:
       - gossip-router
     networks:
@@ -35,7 +35,7 @@ services:
     command: java -jar /app/Peer_box_file-1.0-SNAPSHOT.jar
 
   peer-node3:
-    image: openjdk:11.0.1
+    image: openjdk:17.0.1
     depends_on:
       - gossip-router
     networks:
