@@ -1,19 +1,27 @@
 package pt.ipb.dsys.sd.sender;
 
+import org.jgroups.Message;
+import org.jgroups.Receiver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pt.ipb.dsys.sd.comum.ConnectionManager;
+import pt.ipb.dsys.sd.comum.ficheiros.FicheiroInfo;
+import pt.ipb.dsys.sd.comum.ficheiros.FileAssembler;
 import pt.ipb.dsys.sd.comum.peerapi.PeerAPI;
 import pt.ipb.dsys.sd.comum.protocolo.*;
 import pt.ipb.dsys.sd.comum.ficheiros.FileChunk;
 
 
+import java.io.File;
+import java.io.IOException;
 import java.net.InetAddress;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Funcionalidades_User implements PeerAPI {
     private static final Logger logger = LoggerFactory.getLogger(Main_sender.class);
-
+    private String mensagem;
     @Override
     public void enviarFicheiro(List<FileChunk> chunk) throws Exception {
         ConnectionManager connection = new ConnectionManager();
@@ -63,13 +71,21 @@ public class Funcionalidades_User implements PeerAPI {
     }
 
     @Override
-    public void peersAtivos() throws Exception {
+    public String peersAtivos() throws Exception {
         ConnectionManager connection = new ConnectionManager();
         connection.userChannel.connect(InetAddress.getLocalHost().getHostName());
 
         File_status_peers fileStatusPeers = new File_status_peers(InetAddress.getLocalHost().getHostName());
         fileStatusPeers.setMensagem("Ola, tem algum peer ativo?");
         connection.sendToPeers(fileStatusPeers);
+
+        connection.setUserReceiver(new Receiver() {
+            @Override
+            public void receive(Message msg) {
+                mensagem = msg.getObject();
+            }
+        });
+        return mensagem;
     }
 
     @Override

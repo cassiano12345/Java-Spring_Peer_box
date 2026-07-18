@@ -16,8 +16,8 @@ public class PeerController {
 
     @GetMapping("/peers")
     public String peersAtivos() throws Exception {
-        funcionalidades.peersAtivos();
-        return "Pedido de peers ativos enviado.";
+
+        return funcionalidades.peersAtivos();
     }
 
     @PostMapping("/share")
