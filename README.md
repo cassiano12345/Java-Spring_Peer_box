@@ -1,0 +1,3 @@
+### Projeto dropbox
+
+O presente projeto tem como objetivo simular um dropbox onde os nós ficam em maquinas openjdk em docker... o projeto foi feito em java(intelij)...

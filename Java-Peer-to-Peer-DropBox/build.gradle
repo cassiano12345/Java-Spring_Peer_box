@@ -1,0 +1,34 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.5.4'
+    id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+task peerboxjar(type: Jar, dependsOn: classes){
+    manifest {
+        attributes 'Main-Class': 'pt.ipb.dsys.sd.peer.Main_peer'
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    archiveBaseName = 'Peer_box_file'
+    archiveVersion = project.version
+    from(sourceSets.main.output){
+        include 'pt/ipb/dsys/sd/comum/**'
+        include 'pt/ipb/dsys/sd/peer/**'
+    }
+}
+
+dependencies {
+    implementation 'org.jgroups:jgroups:5.1.6.Final'
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+}
+
