@@ -23,7 +23,7 @@ import java.util.Map;
 public class Funcionalidades_User implements PeerAPI {
     private static final Logger logger = LoggerFactory.getLogger(Main_sender.class);
     private String mensagem;
-    private static List<File_status_peers> statusPeers = new ArrayList<>();
+    //private static List<File_status_peers> statusPeers = new ArrayList<>();
     @Override
     public void enviarFicheiro(List<FileChunk> chunk) throws Exception {
         ConnectionManager connection = new ConnectionManager();
@@ -74,23 +74,29 @@ public class Funcionalidades_User implements PeerAPI {
 
     @Override
     public List<File_status_peers> peersAtivos() throws Exception {
+        List<File_status_peers> statusPeers = new ArrayList<>();
         ConnectionManager connection = new ConnectionManager();
         connection.userChannel.connect(InetAddress.getLocalHost().getHostName());
+
         statusPeers.clear();
+
         File_status_peers fileStatusPeers = new File_status_peers(InetAddress.getLocalHost().getHostName());
+
         connection.setUserReceiver(new Receiver() {
             @Override
             public void receive(Message msg) {
-                if (msg.getObject() instanceof File_status_peers) {
-                    statusPeers.add(msg.getObject());
+                if (msg.getObject() instanceof File_status_peers peer) {
+                    statusPeers.add(peer);
                 }
             }
         });
 
         fileStatusPeers.setMensagem("Ola, tem algum peer ativo?");
         connection.sendToPeers(fileStatusPeers);
+
         Thread.sleep(5000);
-        return statusPeers;
+
+        return new ArrayList<>(statusPeers);
     }
 
     @Override
