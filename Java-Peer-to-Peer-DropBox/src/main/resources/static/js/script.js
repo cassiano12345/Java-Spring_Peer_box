@@ -46,8 +46,10 @@ async function atualizarPeers() {
     const response = await fetch("/peer/peers");
     const peers = await response.json();
     console.log(peers);
-
+    if(peers != ""){
     const corpo = document.getElementById("tbodyPeers");
+
+        adicionarLog(peers.length+" Peer(s) ativo(s)");
 
     // Limpa a tabela
     corpo.innerHTML = "";
@@ -65,7 +67,9 @@ async function atualizarPeers() {
 
         corpo.appendChild(linha);
     });
-
+    }else{
+        adicionarLog("Nenhum peer ativo");
+    }
 }
 
 function enviarFicheiro() {
