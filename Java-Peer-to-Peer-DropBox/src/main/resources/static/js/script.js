@@ -30,6 +30,17 @@ window.onload = function () {
 
     document.getElementById("btnApagar").addEventListener("click", apagarFicheiro);
     listarficehiros();
+    document.getElementById("inputFicheiro").addEventListener("change", function () {
+
+        const ficheiro = this.files[0];
+
+        if (ficheiro) {
+            console.log(ficheiro);
+            console.log(ficheiro.name);
+            console.log(ficheiro.size);
+        }
+
+    });
 };
 
 function adicionarLog(texto) {
@@ -73,6 +84,7 @@ async function atualizarPeers() {
 }
 
 function enviarFicheiro() {
+    document.getElementById("inputFicheiro").click();
 
     adicionarLog("Enviar ficheiro.");
 
@@ -91,8 +103,7 @@ async function apagarFicheiro(nome) {
 
     const resultado = await response.text();
     console.log(resultado);
-
-
+    listarficehiros();
 }
 
 async function listarficehiros() {
