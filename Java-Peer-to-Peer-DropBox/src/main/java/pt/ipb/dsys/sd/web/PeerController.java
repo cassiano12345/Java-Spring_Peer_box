@@ -4,6 +4,10 @@ import org.springframework.web.bind.annotation.*;
 import pt.ipb.dsys.sd.comum.protocolo.File_status_peers;
 import pt.ipb.dsys.sd.sender.Funcionalidades_User;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 @RestController
 @RequestMapping("/peer")
 public class PeerController {
@@ -16,7 +20,7 @@ public class PeerController {
     }
 
     @GetMapping("/peers")
-    public File_status_peers peersAtivos() throws Exception {
+    public List<File_status_peers> peersAtivos() throws Exception {
 
         return funcionalidades.peersAtivos();
     }

@@ -15,6 +15,7 @@ import pt.ipb.dsys.sd.comum.ficheiros.FileChunk;
 import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +23,7 @@ import java.util.Map;
 public class Funcionalidades_User implements PeerAPI {
     private static final Logger logger = LoggerFactory.getLogger(Main_sender.class);
     private String mensagem;
-    private File_status_peers statusPeers;
+    private static List<File_status_peers> statusPeers = new ArrayList<>();
     @Override
     public void enviarFicheiro(List<FileChunk> chunk) throws Exception {
         ConnectionManager connection = new ConnectionManager();
@@ -72,20 +73,23 @@ public class Funcionalidades_User implements PeerAPI {
     }
 
     @Override
-    public File_status_peers peersAtivos() throws Exception {
+    public List<File_status_peers> peersAtivos() throws Exception {
         ConnectionManager connection = new ConnectionManager();
         connection.userChannel.connect(InetAddress.getLocalHost().getHostName());
-
+        statusPeers.clear();
         File_status_peers fileStatusPeers = new File_status_peers(InetAddress.getLocalHost().getHostName());
-        fileStatusPeers.setMensagem("Ola, tem algum peer ativo?");
-        connection.sendToPeers(fileStatusPeers);
-
         connection.setUserReceiver(new Receiver() {
             @Override
             public void receive(Message msg) {
-                statusPeers = msg.getObject();
+                if (msg.getObject() instanceof File_status_peers) {
+                    statusPeers.add(msg.getObject());
+                }
             }
         });
+
+        fileStatusPeers.setMensagem("Ola, tem algum peer ativo?");
+        connection.sendToPeers(fileStatusPeers);
+        Thread.sleep(5000);
         return statusPeers;
     }
 

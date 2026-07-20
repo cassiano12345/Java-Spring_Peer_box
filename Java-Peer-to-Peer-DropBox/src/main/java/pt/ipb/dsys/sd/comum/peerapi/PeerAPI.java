@@ -17,7 +17,7 @@ public interface PeerAPI {
 
     void recuperarMetadata(String pathname) throws Exception;
 
-    File_status_peers peersAtivos() throws Exception;
+    List<File_status_peers> peersAtivos() throws Exception;
 
     void informacoesLocais() throws Exception;
 }

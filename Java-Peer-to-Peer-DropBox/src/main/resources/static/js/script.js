@@ -44,7 +44,7 @@ function adicionarLog(texto) {
 
 async function atualizarPeers() {
     const response = await fetch("/peer/peers");
-    const dados = await response;
+    const dados = await response.json();
     console.log(dados);
     adicionarLog("A atualizar peers...");
 
