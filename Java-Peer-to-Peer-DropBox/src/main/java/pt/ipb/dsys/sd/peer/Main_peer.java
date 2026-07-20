@@ -11,6 +11,7 @@ import pt.ipb.dsys.sd.comum.protocolo.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,8 +27,16 @@ public class Main_peer {
                 if (msg.getObject() instanceof File_status_peers) {
                     File_status_peers status = msg.getObject();
                     try {
+                        File_status_peers estado_peer = new File_status_peers(status.getCLUSTER_CLIENT());
+                        estado_peer.setID_peer(connection.nome_logico());
+                        InetAddress ip = InetAddress.getLocalHost();
+                        estado_peer.setIP(ip.getHostAddress());
+                        estado_peer.setEstado("Ativo ✅");
+                        Num_ficheiros numFicheiros = new Num_ficheiros();
+                        estado_peer.setNum_ficheiros(numFicheiros.contarFicheiros("FICHEIROS_PEERS"));
                         connection.userChannel.connect(status.getCLUSTER_CLIENT());
-                        connection.sendToUser("Sim estou a escuta do "+ connection.nome_logico());
+                        //connection.sendToUser("Sim estou a escuta do "+ connection.nome_logico());
+                        connection.sendToUser(estado_peer);
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }

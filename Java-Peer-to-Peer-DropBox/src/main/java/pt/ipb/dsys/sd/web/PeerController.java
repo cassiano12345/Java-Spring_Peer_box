@@ -1,6 +1,7 @@
 package pt.ipb.dsys.sd.web;
 
 import org.springframework.web.bind.annotation.*;
+import pt.ipb.dsys.sd.comum.protocolo.File_status_peers;
 import pt.ipb.dsys.sd.sender.Funcionalidades_User;
 
 @RestController
@@ -15,7 +16,7 @@ public class PeerController {
     }
 
     @GetMapping("/peers")
-    public String peersAtivos() throws Exception {
+    public File_status_peers peersAtivos() throws Exception {
 
         return funcionalidades.peersAtivos();
     }

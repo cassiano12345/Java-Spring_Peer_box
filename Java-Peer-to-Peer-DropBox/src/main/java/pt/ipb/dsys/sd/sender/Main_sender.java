@@ -38,8 +38,8 @@ public class Main_sender {
                 if (msg.getObject() instanceof File_status_peers) {
                     File_status_peers status = msg.getObject();
                     try {
-                        janela.mostrarAlerta(status.getMensagem());
-
+                        janela.mostrarAlerta(status.getEstado());
+                        janela.adicionarLog("O peer " + status.getID_peer() + " esta "+ status.getEstado());
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }

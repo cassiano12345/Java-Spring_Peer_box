@@ -22,6 +22,7 @@ import java.util.Map;
 public class Funcionalidades_User implements PeerAPI {
     private static final Logger logger = LoggerFactory.getLogger(Main_sender.class);
     private String mensagem;
+    private File_status_peers statusPeers;
     @Override
     public void enviarFicheiro(List<FileChunk> chunk) throws Exception {
         ConnectionManager connection = new ConnectionManager();
@@ -71,7 +72,7 @@ public class Funcionalidades_User implements PeerAPI {
     }
 
     @Override
-    public String peersAtivos() throws Exception {
+    public File_status_peers peersAtivos() throws Exception {
         ConnectionManager connection = new ConnectionManager();
         connection.userChannel.connect(InetAddress.getLocalHost().getHostName());
 
@@ -82,10 +83,10 @@ public class Funcionalidades_User implements PeerAPI {
         connection.setUserReceiver(new Receiver() {
             @Override
             public void receive(Message msg) {
-                mensagem = msg.getObject();
+                statusPeers = msg.getObject();
             }
         });
-        return mensagem;
+        return statusPeers;
     }
 
     @Override
