@@ -29,7 +29,7 @@ window.onload = function () {
     document.getElementById("btnDownload").addEventListener("click", fazerDownload);
 
     document.getElementById("btnApagar").addEventListener("click", apagarFicheiro);
-
+    listarficehiros();
 };
 
 function adicionarLog(texto) {
@@ -84,13 +84,13 @@ function fazerDownload() {
 
 }
 
-function apagarFicheiro_() {
+function apagarFicheiro() {
 
     adicionarLog("Apagar ficheiro.");
 
 }
 
-async function apagarFicheiro() {
+async function listarficehiros() {
     const response = await fetch("/peer/list");
     const ficheiros = await response.json();
     console.log(ficheiros);
