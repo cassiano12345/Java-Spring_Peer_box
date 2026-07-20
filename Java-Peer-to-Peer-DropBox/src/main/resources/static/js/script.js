@@ -84,8 +84,50 @@ function fazerDownload() {
 
 }
 
-function apagarFicheiro() {
+function apagarFicheiro_() {
 
     adicionarLog("Apagar ficheiro.");
 
+}
+
+async function apagarFicheiro() {
+    const response = await fetch("/peer/list");
+    const ficheiros = await response.json();
+    console.log(ficheiros);
+    const corpo = document.getElementById("tbodyFicheiros");
+
+    if(ficheiros != "") {
+        corpo.innerHTML = "";
+
+        ficheiros.forEach(peer => {
+
+            peer.ficheiros.forEach(ficheiro => {
+
+                const linha = document.createElement("tr");
+
+                linha.innerHTML = `
+                <td>${ficheiro.nome}</td>
+                <td>${ficheiro.tamanho}</td>
+                <td>${peer.cluster_SERVIDOR}</td>
+                <td>${ficheiro.numeroChunks}</td>
+                <td>
+                <button onclick="downloadFicheiro('${peer.cluster_SERVIDOR}', '${ficheiro.nome}')">
+                    ⬇️ Download
+                </button>
+
+                <button onclick="apagarFicheiro('${peer.cluster_SERVIDOR}', '${ficheiro.nome}')">
+                    🗑️ Apagar
+                </button>
+            </td>
+            `;
+
+                corpo.appendChild(linha);
+            });
+
+        });
+    }else{
+        adicionarLog("Não ha ficheiros disponíveis nos peers!");
+        corpo.innerHTML = "";
+
+    }
 }

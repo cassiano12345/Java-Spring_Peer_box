@@ -60,11 +60,27 @@ public class Funcionalidades_User implements PeerAPI {
     }
 
     @Override
-    public void listarFicheiros() throws Exception {
+    public List<File_listar_ficheiros> listarFicheiros() throws Exception {
+        List<File_listar_ficheiros> fileListarFicheiros = new ArrayList<>();
         ConnectionManager connection = new ConnectionManager();
         connection.userChannel.connect(InetAddress.getLocalHost().getHostName());
-        File_listar_ficheiros fileInformacoesLocais = new File_listar_ficheiros(InetAddress.getLocalHost().getHostName());
-        connection.sendToPeers(fileInformacoesLocais);
+
+        fileListarFicheiros.clear();
+        File_listar_ficheiros fileListarFicheiros1 = new File_listar_ficheiros(InetAddress.getLocalHost().getHostName());
+
+        connection.setUserReceiver(new Receiver() {
+            @Override
+            public void receive(Message msg) {
+                if (msg.getObject() instanceof File_listar_ficheiros lista) {
+                    fileListarFicheiros.add(lista);
+                }
+            }
+        });
+
+        connection.sendToPeers(fileListarFicheiros1);
+        Thread.sleep(2000);
+
+        return new ArrayList<>(fileListarFicheiros);
     }
 
     @Override

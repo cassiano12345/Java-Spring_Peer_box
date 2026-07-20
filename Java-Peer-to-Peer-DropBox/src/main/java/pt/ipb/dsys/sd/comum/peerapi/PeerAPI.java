@@ -1,6 +1,7 @@
 package pt.ipb.dsys.sd.comum.peerapi;
 
 import pt.ipb.dsys.sd.comum.ficheiros.FileChunk;
+import pt.ipb.dsys.sd.comum.protocolo.File_listar_ficheiros;
 import pt.ipb.dsys.sd.comum.protocolo.File_status_peers;
 
 import java.util.List;
@@ -13,7 +14,7 @@ public interface PeerAPI {
 
     void apagarFicheiro(String pathname) throws Exception;
 
-    void listarFicheiros() throws Exception;
+    List<File_listar_ficheiros> listarFicheiros() throws Exception;
 
     void recuperarMetadata(String pathname) throws Exception;
 

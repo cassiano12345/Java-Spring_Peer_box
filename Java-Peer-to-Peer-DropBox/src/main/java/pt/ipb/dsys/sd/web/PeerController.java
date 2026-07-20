@@ -1,6 +1,7 @@
 package pt.ipb.dsys.sd.web;
 
 import org.springframework.web.bind.annotation.*;
+import pt.ipb.dsys.sd.comum.protocolo.File_listar_ficheiros;
 import pt.ipb.dsys.sd.comum.protocolo.File_status_peers;
 import pt.ipb.dsys.sd.sender.Funcionalidades_User;
 
@@ -47,10 +48,10 @@ public class PeerController {
     }
 
     @GetMapping("/list")
-    public String listarFicheiros() throws Exception {
+    public List<File_listar_ficheiros> listarFicheiros() throws Exception {
 
-        funcionalidades.listarFicheiros();
-        return "Pedido de listagem enviado.";
+
+        return funcionalidades.listarFicheiros();
     }
 
     @GetMapping("/metadata")
