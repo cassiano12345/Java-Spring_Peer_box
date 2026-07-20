@@ -94,7 +94,7 @@ public class Funcionalidades_User implements PeerAPI {
         fileStatusPeers.setMensagem("Ola, tem algum peer ativo?");
         connection.sendToPeers(fileStatusPeers);
 
-        Thread.sleep(5000);
+        Thread.sleep(2000);
 
         return new ArrayList<>(statusPeers);
     }

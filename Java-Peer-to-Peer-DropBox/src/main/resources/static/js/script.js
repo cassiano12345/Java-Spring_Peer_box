@@ -44,11 +44,27 @@ function adicionarLog(texto) {
 
 async function atualizarPeers() {
     const response = await fetch("/peer/peers");
-    const dados = await response.json();
-    console.log(dados);
-    adicionarLog("A atualizar peers...");
+    const peers = await response.json();
+    console.log(peers);
 
-    // fetch("/api/peers")
+    const corpo = document.getElementById("tbodyPeers");
+
+    // Limpa a tabela
+    corpo.innerHTML = "";
+
+    peers.forEach(peer => {
+
+        const linha = document.createElement("tr");
+
+        linha.innerHTML = `
+            <td>${peer.cluster_CLIENT}</td>
+            <td>${peer.ip}</td>
+            <td>${peer.estado}</td>
+            <td>${peer.num_ficheiros}</td>
+        `;
+
+        corpo.appendChild(linha);
+    });
 
 }
 
