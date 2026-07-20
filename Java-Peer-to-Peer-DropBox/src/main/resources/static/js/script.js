@@ -84,9 +84,14 @@ function fazerDownload() {
 
 }
 
-function apagarFicheiro() {
+async function apagarFicheiro(nome) {
+    const response = await fetch("/peer/delete?nome=" + encodeURIComponent(nome), {
+        method: "POST"
+    });
 
-    adicionarLog("Apagar ficheiro.");
+    const resultado = await response.text();
+    console.log(resultado);
+
 
 }
 
@@ -115,7 +120,7 @@ async function listarficehiros() {
                     ⬇️ Download
                 </button>
 
-                <button onclick="apagarFicheiro('${peer.cluster_SERVIDOR}', '${ficheiro.nome}')">
+                <button onclick="apagarFicheiro('${ficheiro.nome}')">
                     🗑️ Apagar
                 </button>
             </td>

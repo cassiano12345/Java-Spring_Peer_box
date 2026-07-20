@@ -33,7 +33,7 @@ public class PeerController {
         return "Pedido para partilhar o ficheiro recebido.";
     }
 
-    @DeleteMapping("/delete")
+    @PostMapping("/delete")
     public String apagarFicheiro(@RequestParam String nome) throws Exception {
 
         funcionalidades.apagarFicheiro(nome);
