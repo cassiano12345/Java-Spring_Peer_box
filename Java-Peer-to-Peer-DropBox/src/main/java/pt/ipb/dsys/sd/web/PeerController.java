@@ -34,7 +34,7 @@ public class PeerController {
     }
 
     @PostMapping("/delete")
-    public String apagarFicheiro(@RequestParam String nome) throws Exception {
+    public ArrayList<String> apagarFicheiro(@RequestParam String nome) throws Exception {
 
         return funcionalidades.apagarFicheiro(nome);
     }

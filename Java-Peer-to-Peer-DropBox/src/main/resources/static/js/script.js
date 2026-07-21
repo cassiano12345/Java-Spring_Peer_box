@@ -104,10 +104,13 @@ async function apagarFicheiro(nome) {
         method: "POST"
     });
 
-    const resultado = await response.text();
+    const resultados = await response.text();
+    const mensagensArray = JSON.parse(resultados);
 
-    //console.log(resultado);
-    adicionarLog(resultado);
+    for (const msg of mensagensArray) {
+        console.log(msg);
+        adicionarLog(msg);
+    }
     listarficehiros();
 }
 

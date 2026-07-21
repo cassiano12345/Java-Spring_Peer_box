@@ -10,8 +10,6 @@ import pt.ipb.dsys.sd.comum.ficheiros.FileAssembler;
 import pt.ipb.dsys.sd.comum.peerapi.PeerAPI;
 import pt.ipb.dsys.sd.comum.protocolo.*;
 import pt.ipb.dsys.sd.comum.ficheiros.FileChunk;
-
-
 import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
@@ -58,7 +56,7 @@ public class Funcionalidades_User implements PeerAPI {
     }
 
     @Override
-    public String apagarFicheiro(String pathname) throws Exception {
+    public ArrayList<String> apagarFicheiro(String pathname) throws Exception {
         connection.userChannel.connect(InetAddress.getLocalHost().getHostName());
         File_apagar_ficheiro fileApagarFicheiro = new File_apagar_ficheiro(InetAddress.getLocalHost().getHostName());
         fileApagarFicheiro.setNome_ficheiro(pathname);

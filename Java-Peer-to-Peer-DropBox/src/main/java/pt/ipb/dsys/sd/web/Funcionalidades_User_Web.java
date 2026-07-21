@@ -23,7 +23,7 @@ import java.util.Map;
 
 public class Funcionalidades_User_Web implements PeerAPI{
     private static final Logger logger = LoggerFactory.getLogger(Main_sender.class);
-    private String mensagem;
+    private ArrayList<String> mensagem = new ArrayList<>();
     //private static List<File_status_peers> statusPeers = new ArrayList<>();
     @Override
     public void enviarFicheiro(List<FileChunk> chunk) throws Exception {
@@ -52,7 +52,7 @@ public class Funcionalidades_User_Web implements PeerAPI{
     }
 
     @Override
-    public String apagarFicheiro(String pathname) throws Exception {
+    public ArrayList<String> apagarFicheiro(String pathname) throws Exception {
 
         ConnectionManager connection = new ConnectionManager();
         connection.userChannel.connect(InetAddress.getLocalHost().getHostName());
@@ -63,7 +63,7 @@ public class Funcionalidades_User_Web implements PeerAPI{
             @Override
             public void receive(Message msg) {
                 if (msg.getObject() instanceof File_apagar_ficheiro apagar) {
-                    mensagem = apagar.getResposta();
+                    mensagem.add(apagar.getResposta());
                 }
             }
         });

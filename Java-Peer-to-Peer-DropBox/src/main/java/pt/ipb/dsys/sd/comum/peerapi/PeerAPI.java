@@ -4,6 +4,7 @@ import pt.ipb.dsys.sd.comum.ficheiros.FileChunk;
 import pt.ipb.dsys.sd.comum.protocolo.File_listar_ficheiros;
 import pt.ipb.dsys.sd.comum.protocolo.File_status_peers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface PeerAPI {
@@ -12,7 +13,7 @@ public interface PeerAPI {
 
     void recuperarFicheiro(String pathname) throws Exception;
 
-    String apagarFicheiro(String pathname) throws Exception;
+    ArrayList<String> apagarFicheiro(String pathname) throws Exception;
 
     List<File_listar_ficheiros> listarFicheiros() throws Exception;
 
