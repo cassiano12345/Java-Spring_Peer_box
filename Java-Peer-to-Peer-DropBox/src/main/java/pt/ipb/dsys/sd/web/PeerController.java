@@ -2,6 +2,7 @@ package pt.ipb.dsys.sd.web;
 
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import pt.ipb.dsys.sd.comum.ficheiros.Arquivo;
 import pt.ipb.dsys.sd.comum.protocolo.File_listar_ficheiros;
 import pt.ipb.dsys.sd.comum.protocolo.File_status_peers;
 import pt.ipb.dsys.sd.sender.Funcionalidades_User;
@@ -34,14 +35,14 @@ public class PeerController {
 
     @PostMapping("/upload")
     public String upload(@RequestParam("ficheiro") MultipartFile ficheiro) throws Exception {
+        File caminhos = new File("FICHEIROS_PEERS_USER/" + ficheiro.getOriginalFilename());
 
         Path destino = Paths.get("FICHEIROS_PEERS_USER", ficheiro.getOriginalFilename());
-
         Files.createDirectories(destino.getParent());
-
         ficheiro.transferTo(destino);
+        funcionalidades.enviarFicheiro(Arquivo.Criar_chunks(caminhos.getName(),caminhos.getAbsolutePath()));
 
-        return "Guardado com sucesso!";
+        return "Tentanto";
     }
 
 

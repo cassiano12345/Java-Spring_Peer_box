@@ -30,7 +30,6 @@ public class Funcionalidades_User_Web implements PeerAPI{
     public void enviarFicheiro(List<FileChunk> chunk) throws Exception {
         ConnectionManager connection = new ConnectionManager();
         connection.userChannel.connect(InetAddress.getLocalHost().getHostName());
-
         for (FileChunk chunks : chunk) {
             File_enviar_chunk msg = new File_enviar_chunk(
                     chunks.getNome_ficheiro(),
