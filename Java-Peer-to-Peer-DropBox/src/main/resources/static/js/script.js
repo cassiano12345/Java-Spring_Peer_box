@@ -30,15 +30,30 @@ window.onload = function () {
 
     document.getElementById("btnApagar").addEventListener("click", apagarFicheiro);
 
-    document.getElementById("inputFicheiro").addEventListener("change", function () {
+    document.getElementById("inputFicheiro").addEventListener("change", async function () {
 
         const ficheiro = this.files[0];
 
-        if (ficheiro) {
-            console.log(ficheiro);
-            console.log(ficheiro.name);
-            console.log(ficheiro.size);
-        }
+        if (!ficheiro)
+            return;
+
+        adicionarLog("A enviar: " + ficheiro.name);
+
+        const formData = new FormData();
+        formData.append("ficheiro", ficheiro);
+
+        const response = await fetch("/peer/upload", {
+            method: "POST",
+            body: formData
+        });
+
+        const resposta = await response.text();
+
+        console.log(resposta);
+        adicionarLog(resposta);
+
+        // Limpa o input para permitir selecionar o mesmo ficheiro outra vez
+        this.value = "";
 
     });
 

@@ -1,10 +1,16 @@
 package pt.ipb.dsys.sd.web;
 
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import pt.ipb.dsys.sd.comum.protocolo.File_listar_ficheiros;
 import pt.ipb.dsys.sd.comum.protocolo.File_status_peers;
 import pt.ipb.dsys.sd.sender.Funcionalidades_User;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -26,12 +32,18 @@ public class PeerController {
         return funcionalidades.peersAtivos();
     }
 
-    @PostMapping("/share")
-    public String partilharFicheiro(@RequestParam String caminho, @RequestParam int replicacao) {
+    @PostMapping("/upload")
+    public String upload(@RequestParam("ficheiro") MultipartFile ficheiro) throws Exception {
 
-        // Vamos implementar depois
-        return "Pedido para partilhar o ficheiro recebido.";
+        Path destino = Paths.get("FICHEIROS_PEERS_USER", ficheiro.getOriginalFilename());
+
+        Files.createDirectories(destino.getParent());
+
+        ficheiro.transferTo(destino);
+
+        return "Guardado com sucesso!";
     }
+
 
     @PostMapping("/delete")
     public ArrayList<String> apagarFicheiro(@RequestParam String nome) throws Exception {
