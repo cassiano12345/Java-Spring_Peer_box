@@ -36,8 +36,7 @@ public class PeerController {
     @PostMapping("/delete")
     public String apagarFicheiro(@RequestParam String nome) throws Exception {
 
-        funcionalidades.apagarFicheiro(nome);
-        return "Pedido para apagar o ficheiro enviado.";
+        return funcionalidades.apagarFicheiro(nome);
     }
 
     @GetMapping("/retrieve")

@@ -105,7 +105,9 @@ async function apagarFicheiro(nome) {
     });
 
     const resultado = await response.text();
-    console.log(resultado);
+
+    //console.log(resultado);
+    adicionarLog(resultado);
     listarficehiros();
 }
 
