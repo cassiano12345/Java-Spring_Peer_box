@@ -12,7 +12,7 @@ public interface PeerAPI {
 
     void recuperarFicheiro(String pathname) throws Exception;
 
-    void apagarFicheiro(String pathname) throws Exception;
+    String apagarFicheiro(String pathname) throws Exception;
 
     List<File_listar_ficheiros> listarFicheiros() throws Exception;
 

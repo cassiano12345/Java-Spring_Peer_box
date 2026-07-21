@@ -82,6 +82,14 @@ public class Main_sender {
                         }//
                     }
                 }
+                else if (msg.getObject() instanceof File_apagar_ficheiro) {
+                    File_apagar_ficheiro resposta = msg.getObject();
+                    try {
+                        janela.adicionarLog(resposta.getResposta());
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                }
                 else {
                     janela.adicionarLog(msg.getObject().toString());
                 }

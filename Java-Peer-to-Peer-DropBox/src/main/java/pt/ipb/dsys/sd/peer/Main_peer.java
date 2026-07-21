@@ -91,11 +91,13 @@ public class Main_peer {
                 else if (msg.getObject() instanceof File_apagar_ficheiro) {
                     File_apagar_ficheiro fileApagarFicheiro = msg.getObject();
                     File ficheiro = new File("FICHEIROS_PEERS/" + fileApagarFicheiro.getNome_ficheiro());
+                    File_apagar_ficheiro fileApagarFicheiro_resposta = new File_apagar_ficheiro(fileApagarFicheiro.getCLUSTER_CLIENT());
                     if (!ficheiro.exists()){
                         try {
                             logger.info("Ficheiro não existe no: " + connection.nome_logico());
                             connection.userChannel.connect(fileApagarFicheiro.getCLUSTER_CLIENT());
-                            connection.sendToUser("Ficheiro não existe no: " + connection.nome_logico());
+                            fileApagarFicheiro_resposta.setResposta("Ficheiro não existe no: " + connection.nome_logico());
+                            connection.sendToUser(fileApagarFicheiro_resposta);
 
                         } catch (Exception e) {
                             throw new RuntimeException(e);
@@ -105,7 +107,8 @@ public class Main_peer {
                         try {
                             logger.info("Ficheiro apagado no: " + connection.nome_logico());
                             connection.userChannel.connect(fileApagarFicheiro.getCLUSTER_CLIENT());
-                            connection.sendToUser("Ficheiro apagado no: " + connection.nome_logico());
+                            fileApagarFicheiro_resposta.setResposta("Ficheiro apagado no: " + connection.nome_logico());
+                            connection.sendToUser(fileApagarFicheiro_resposta);
 
                         } catch (Exception e) {
                             throw new RuntimeException(e);

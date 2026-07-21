@@ -13,7 +13,7 @@ import java.util.List;
 @RequestMapping("/peer")
 public class PeerController {
 
-    private final Funcionalidades_User funcionalidades = new Funcionalidades_User();
+    private final Funcionalidades_User_Web funcionalidades = new Funcionalidades_User_Web();
 
     @GetMapping
     public String index() {

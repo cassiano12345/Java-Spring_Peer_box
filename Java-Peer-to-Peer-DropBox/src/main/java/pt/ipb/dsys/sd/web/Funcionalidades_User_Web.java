@@ -1,4 +1,4 @@
-package pt.ipb.dsys.sd.sender;
+package pt.ipb.dsys.sd.web;
 
 import org.jgroups.Message;
 import org.jgroups.Receiver;
@@ -10,6 +10,7 @@ import pt.ipb.dsys.sd.comum.ficheiros.FileAssembler;
 import pt.ipb.dsys.sd.comum.peerapi.PeerAPI;
 import pt.ipb.dsys.sd.comum.protocolo.*;
 import pt.ipb.dsys.sd.comum.ficheiros.FileChunk;
+import pt.ipb.dsys.sd.sender.Main_sender;
 
 
 import java.io.File;
@@ -20,21 +21,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Funcionalidades_User implements PeerAPI {
+public class Funcionalidades_User_Web implements PeerAPI{
     private static final Logger logger = LoggerFactory.getLogger(Main_sender.class);
     private String mensagem;
-    private static final ConnectionManager connection;
-
-    static {
-        try {
-            connection = new ConnectionManager();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
+    //private static List<File_status_peers> statusPeers = new ArrayList<>();
     @Override
     public void enviarFicheiro(List<FileChunk> chunk) throws Exception {
+        ConnectionManager connection = new ConnectionManager();
         connection.userChannel.connect(InetAddress.getLocalHost().getHostName());
         for (FileChunk chunks : chunk) {
             File_enviar_chunk msg = new File_enviar_chunk(
@@ -51,6 +44,7 @@ public class Funcionalidades_User implements PeerAPI {
 
     @Override
     public void recuperarFicheiro(String pathname) throws Exception {
+        ConnectionManager connection = new ConnectionManager();
         connection.userChannel.connect(InetAddress.getLocalHost().getHostName());
         File_pedir_ficheiro filePedirFicheiro = new File_pedir_ficheiro(InetAddress.getLocalHost().getHostName());
         filePedirFicheiro.setNome_ficheiro(pathname);
@@ -59,19 +53,35 @@ public class Funcionalidades_User implements PeerAPI {
 
     @Override
     public String apagarFicheiro(String pathname) throws Exception {
+
+        ConnectionManager connection = new ConnectionManager();
         connection.userChannel.connect(InetAddress.getLocalHost().getHostName());
         File_apagar_ficheiro fileApagarFicheiro = new File_apagar_ficheiro(InetAddress.getLocalHost().getHostName());
+
+
+        connection.setUserReceiver(new Receiver() {
+            @Override
+            public void receive(Message msg) {
+                if (msg.getObject() instanceof File_apagar_ficheiro apagar) {
+                    mensagem = apagar.getResposta();
+                }
+            }
+        });
+
         fileApagarFicheiro.setNome_ficheiro(pathname);
         connection.sendToPeers(fileApagarFicheiro);
-        return null;
+        Thread.sleep(1000);
+        return mensagem;
     }
 
     @Override
     public List<File_listar_ficheiros> listarFicheiros() throws Exception {
         List<File_listar_ficheiros> fileListarFicheiros = new ArrayList<>();
+        ConnectionManager connection = new ConnectionManager();
         connection.userChannel.connect(InetAddress.getLocalHost().getHostName());
 
         fileListarFicheiros.clear();
+
         File_listar_ficheiros fileListarFicheiros1 = new File_listar_ficheiros(InetAddress.getLocalHost().getHostName());
 
         connection.setUserReceiver(new Receiver() {
@@ -84,7 +94,7 @@ public class Funcionalidades_User implements PeerAPI {
         });
 
         connection.sendToPeers(fileListarFicheiros1);
-        //Thread.sleep(2000);
+        Thread.sleep(1000);
 
         return new ArrayList<>(fileListarFicheiros);
     }
@@ -97,6 +107,7 @@ public class Funcionalidades_User implements PeerAPI {
     @Override
     public List<File_status_peers> peersAtivos() throws Exception {
         List<File_status_peers> statusPeers = new ArrayList<>();
+        ConnectionManager connection = new ConnectionManager();
         connection.userChannel.connect(InetAddress.getLocalHost().getHostName());
 
         statusPeers.clear();
@@ -115,13 +126,14 @@ public class Funcionalidades_User implements PeerAPI {
         fileStatusPeers.setMensagem("Ola, tem algum peer ativo?");
         connection.sendToPeers(fileStatusPeers);
 
-        Thread.sleep(2000);
+        Thread.sleep(5000);
 
         return new ArrayList<>(statusPeers);
     }
 
     @Override
     public void informacoesLocais() throws Exception {
+        ConnectionManager connection = new ConnectionManager();
         connection.userChannel.connect(InetAddress.getLocalHost().getHostName());
         File_listar_ficheiros fileInformacoesLocais = new File_listar_ficheiros(InetAddress.getLocalHost().getHostName());
         connection.sendToPeers(fileInformacoesLocais);

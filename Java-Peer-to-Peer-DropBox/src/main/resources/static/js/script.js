@@ -29,7 +29,7 @@ window.onload = function () {
     document.getElementById("btnDownload").addEventListener("click", fazerDownload);
 
     document.getElementById("btnApagar").addEventListener("click", apagarFicheiro);
-    listarficehiros();
+
     document.getElementById("inputFicheiro").addEventListener("change", function () {
 
         const ficheiro = this.files[0];
@@ -41,6 +41,9 @@ window.onload = function () {
         }
 
     });
+
+    listarficehiros();
+    atualizarPeers();
 };
 
 function adicionarLog(texto) {

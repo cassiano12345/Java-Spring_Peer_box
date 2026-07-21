@@ -4,12 +4,20 @@ import pt.ipb.dsys.sd.comum.Mensagem_peer;
 
 public class File_apagar_ficheiro implements Mensagem_peer {
     private String CLUSTER_CLIENT;
-
     private String nome_ficheiro;
+    private String resposta;
 
     public File_apagar_ficheiro(String CLUSTER_CLIENT) {
 
         this.CLUSTER_CLIENT = CLUSTER_CLIENT;
+    }
+
+    public String getResposta() {
+        return resposta;
+    }
+
+    public void setResposta(String resposta) {
+        this.resposta = resposta;
     }
 
     public String getCLUSTER_CLIENT() {
