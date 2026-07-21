@@ -1,6 +1,7 @@
 package pt.ipb.dsys.sd.comum.peerapi;
 
 import pt.ipb.dsys.sd.comum.ficheiros.FileChunk;
+import pt.ipb.dsys.sd.comum.protocolo.File_enviar_chunk;
 import pt.ipb.dsys.sd.comum.protocolo.File_listar_ficheiros;
 import pt.ipb.dsys.sd.comum.protocolo.File_status_peers;
 
@@ -9,7 +10,7 @@ import java.util.List;
 
 public interface PeerAPI {
 
-    void enviarFicheiro(List<FileChunk> chunks) throws Exception;
+    ArrayList<String> enviarFicheiro(List<FileChunk> chunks) throws Exception;
 
     void recuperarFicheiro(String pathname) throws Exception;
 

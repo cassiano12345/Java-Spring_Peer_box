@@ -2,20 +2,22 @@ package pt.ipb.dsys.sd.comum.protocolo;
 
 import pt.ipb.dsys.sd.comum.Mensagem_peer;
 
-public class File_pedir_ficheiro implements Mensagem_peer {
+public class File_receber_ficheiro implements Mensagem_peer {
     private String nome_ficheiro;
     private String sha256;
     private int numero;
     private int totalChunks;
     private byte[] dados;
     private String CLUSTER_CLIENT;
+    private  String mensagem;
 
 
 
-    public File_pedir_ficheiro(String CLUSTER_CLIENT) {
+    public File_receber_ficheiro(String CLUSTER_CLIENT) {
 
         this.CLUSTER_CLIENT = CLUSTER_CLIENT;
     }
+
 
     public void setDados(byte[] dados) {
         this.dados = dados;

@@ -10,6 +10,7 @@ public class File_enviar_chunk implements Mensagem_peer {
     private int totalChunks;
     private byte[] dados;
     private String CLUSTER_CLIENT;
+    private  String mensagem;
 
 
 
@@ -20,6 +21,14 @@ public class File_enviar_chunk implements Mensagem_peer {
         this.totalChunks = totalChunks_;
         this.CLUSTER_CLIENT = CLUSTER_CLIENT;
         this.dados = dados_;
+    }
+
+    public String getMensagem() {
+        return mensagem;
+    }
+
+    public void setMensagem(String mensagem) {
+        this.mensagem = mensagem;
     }
 
     public String getCLUSTER_CLIENT() {

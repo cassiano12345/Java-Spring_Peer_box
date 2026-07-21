@@ -5,18 +5,13 @@ import org.jgroups.Receiver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pt.ipb.dsys.sd.comum.ConnectionManager;
-import pt.ipb.dsys.sd.comum.ficheiros.FicheiroInfo;
-import pt.ipb.dsys.sd.comum.ficheiros.FileAssembler;
 import pt.ipb.dsys.sd.comum.peerapi.PeerAPI;
 import pt.ipb.dsys.sd.comum.protocolo.*;
 import pt.ipb.dsys.sd.comum.ficheiros.FileChunk;
-import java.io.File;
-import java.io.IOException;
+
 import java.net.InetAddress;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Funcionalidades_User implements PeerAPI {
     private static final Logger logger = LoggerFactory.getLogger(Main_sender.class);
@@ -32,7 +27,7 @@ public class Funcionalidades_User implements PeerAPI {
     }
 
     @Override
-    public void enviarFicheiro(List<FileChunk> chunk) throws Exception {
+    public ArrayList<String> enviarFicheiro(List<FileChunk> chunk) throws Exception {
         connection.userChannel.connect(InetAddress.getLocalHost().getHostName());
         for (FileChunk chunks : chunk) {
             File_enviar_chunk msg = new File_enviar_chunk(
@@ -45,12 +40,13 @@ public class Funcionalidades_User implements PeerAPI {
             logger.info("Enviado chunk {}", chunks.getNumero());
             connection.sendToPeers(msg);
         }
+        return null;
     }
 
     @Override
     public void recuperarFicheiro(String pathname) throws Exception {
         connection.userChannel.connect(InetAddress.getLocalHost().getHostName());
-        File_pedir_ficheiro filePedirFicheiro = new File_pedir_ficheiro(InetAddress.getLocalHost().getHostName());
+        File_receber_ficheiro filePedirFicheiro = new File_receber_ficheiro(InetAddress.getLocalHost().getHostName());
         filePedirFicheiro.setNome_ficheiro(pathname);
         connection.sendToPeers(filePedirFicheiro);
     }

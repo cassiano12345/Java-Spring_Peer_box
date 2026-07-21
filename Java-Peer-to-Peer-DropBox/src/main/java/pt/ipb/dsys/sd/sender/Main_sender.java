@@ -57,6 +57,24 @@ public class Main_sender {
                 }
                 else if (msg.getObject() instanceof File_enviar_chunk) { // Verificando se o objeto recebido pelo user é do tipo File_enviar_chunk.
                     File_enviar_chunk chunk = (File_enviar_chunk) msg.getObject();
+                    janela.adicionarLog(chunk.getMensagem());
+                }
+                else if (msg.getObject() instanceof File_apagar_ficheiro) {
+                    File_apagar_ficheiro resposta = msg.getObject();
+                    try {
+                        janela.adicionarLog(resposta.getResposta());
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                else {
+                    janela.adicionarLog(msg.getObject().toString());
+                }
+
+
+                /*
+                                else if (msg.getObject() instanceof File_enviar_chunk) { // Verificando se o objeto recebido pelo user é do tipo File_enviar_chunk.
+                    File_enviar_chunk chunk = (File_enviar_chunk) msg.getObject();
                     chunksList.computeIfAbsent(chunk.getSha256(), k -> new HashMap<>()).put(chunk.getNumero(), chunk); // Passando o chunk para o Map onde primeiro cria o map com a SHA256, dps cria um map com o num do chunk, e dentro guarda o chunk recebido.
                     logger.info("Recebido chunk {}", chunk.getNumero());
                     if (chunksList.get(chunk.getSha256()).size() == chunk.getTotalChunks()) { // Verificar se o numero de chunks para o determinado SHA256 é igual ao total de chunks que deve receber
@@ -82,17 +100,7 @@ public class Main_sender {
                         }//
                     }
                 }
-                else if (msg.getObject() instanceof File_apagar_ficheiro) {
-                    File_apagar_ficheiro resposta = msg.getObject();
-                    try {
-                        janela.adicionarLog(resposta.getResposta());
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-                else {
-                    janela.adicionarLog(msg.getObject().toString());
-                }
+                                */
             }
         });
     }

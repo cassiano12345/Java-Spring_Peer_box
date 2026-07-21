@@ -47,14 +47,16 @@ window.onload = function () {
             body: formData
         });
 
-        const resposta = await response.text();
+        const mensagensArray = JSON.parse(await response.text());
 
-        console.log(resposta);
-        adicionarLog(resposta);
+        for (const msg of mensagensArray) {
+            console.log(msg);
+            adicionarLog(msg);
+        }
 
         // Limpa o input para permitir selecionar o mesmo ficheiro outra vez
         this.value = "";
-
+        listarficehiros();
     });
 
     listarficehiros();

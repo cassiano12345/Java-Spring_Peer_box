@@ -62,7 +62,8 @@ public class Main_peer {
                                 chunksList.remove(chunk.getSha256());
                                 logger.info("Ficheiro recebido com sucesso pelo: " + connection.nome_logico());
                                 connection.userChannel.connect(chunk.getCLUSTER_CLIENT());
-                                connection.sendToUser("Ficheiro recebido com sucesso pelo: " + connection.nome_logico());
+                                chunk.setMensagem("Ficheiro recebido com sucesso pelo: " + connection.nome_logico());
+                                connection.sendToUser(chunk);
                             } catch (Exception e) {
                                 throw new RuntimeException(e);
                             }
@@ -71,15 +72,16 @@ public class Main_peer {
                                 chunksList.remove(chunk.getSha256());
                                 logger.info("O ficheiro ja existe no: " + connection.nome_logico()+ ", mude de nome ou envie um novo ficheiro");
                                 connection.userChannel.connect(chunk.getCLUSTER_CLIENT());
-                                connection.sendToUser("O ficheiro ja existe no: " + connection.nome_logico()+ ", mude de nome ou envie um novo ficheiro");
+                                chunk.setMensagem("O ficheiro ja existe no: " + connection.nome_logico()+ ", mude de nome ou envie um novo ficheiro");
+                                connection.sendToUser(chunk);
                             } catch (Exception e) {
                                 throw new RuntimeException(e);
                             }
                         }//
                     }
                 }
-                else if (msg.getObject() instanceof File_pedir_ficheiro) {
-                    File_pedir_ficheiro filePedirFicheiro = msg.getObject();
+                else if (msg.getObject() instanceof File_receber_ficheiro) {
+                    File_receber_ficheiro filePedirFicheiro = msg.getObject();
                     Funcionalidades_Peer funcionalidadesPeer = new Funcionalidades_Peer();
                     try {
                         funcionalidadesPeer.enviar_ficheiro(Arquivo.Criar_chunks(filePedirFicheiro.getNome_ficheiro(),"FICHEIROS_PEERS/"+filePedirFicheiro.getNome_ficheiro()),filePedirFicheiro.getCLUSTER_CLIENT());

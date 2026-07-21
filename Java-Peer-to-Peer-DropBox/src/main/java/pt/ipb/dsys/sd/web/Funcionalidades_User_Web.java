@@ -5,21 +5,15 @@ import org.jgroups.Receiver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pt.ipb.dsys.sd.comum.ConnectionManager;
-import pt.ipb.dsys.sd.comum.ficheiros.FicheiroInfo;
-import pt.ipb.dsys.sd.comum.ficheiros.FileAssembler;
 import pt.ipb.dsys.sd.comum.peerapi.PeerAPI;
 import pt.ipb.dsys.sd.comum.protocolo.*;
 import pt.ipb.dsys.sd.comum.ficheiros.FileChunk;
 import pt.ipb.dsys.sd.sender.Main_sender;
 
 
-import java.io.File;
-import java.io.IOException;
 import java.net.InetAddress;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Funcionalidades_User_Web implements PeerAPI{
     private static final Logger logger = LoggerFactory.getLogger(Main_sender.class);
@@ -27,9 +21,23 @@ public class Funcionalidades_User_Web implements PeerAPI{
     //private static List<File_status_peers> statusPeers = new ArrayList<>();
 
     @Override
-    public void enviarFicheiro(List<FileChunk> chunk) throws Exception {
+    public ArrayList<String> enviarFicheiro(List<FileChunk> chunk) throws Exception {
         ConnectionManager connection = new ConnectionManager();
         connection.userChannel.connect(InetAddress.getLocalHost().getHostName());
+        ArrayList<String> mensagem_enviar_ficheiro = new ArrayList<>();
+        mensagem_enviar_ficheiro.clear();
+
+        connection.setUserReceiver(new Receiver() {
+            @Override
+            public void receive(Message msg) {
+                if (msg.getObject() instanceof File_enviar_chunk) { // Verificando se o objeto recebido pelo user é do tipo File_enviar_chunk.
+                    File_enviar_chunk chunk = (File_enviar_chunk) msg.getObject();
+                    mensagem_enviar_ficheiro.add(chunk.getMensagem());
+                }
+            }
+        });
+
+
         for (FileChunk chunks : chunk) {
             File_enviar_chunk msg = new File_enviar_chunk(
                     chunks.getNome_ficheiro(),
@@ -41,13 +49,16 @@ public class Funcionalidades_User_Web implements PeerAPI{
             logger.info("Enviado chunk {}", chunks.getNumero());
             connection.sendToPeers(msg);
         }
+
+        Thread.sleep(1000);
+        return mensagem_enviar_ficheiro;
     }
 
     @Override
     public void recuperarFicheiro(String pathname) throws Exception {
         ConnectionManager connection = new ConnectionManager();
         connection.userChannel.connect(InetAddress.getLocalHost().getHostName());
-        File_pedir_ficheiro filePedirFicheiro = new File_pedir_ficheiro(InetAddress.getLocalHost().getHostName());
+        File_receber_ficheiro filePedirFicheiro = new File_receber_ficheiro(InetAddress.getLocalHost().getHostName());
         filePedirFicheiro.setNome_ficheiro(pathname);
         connection.sendToPeers(filePedirFicheiro);
     }

@@ -34,15 +34,14 @@ public class PeerController {
     }
 
     @PostMapping("/upload")
-    public String upload(@RequestParam("ficheiro") MultipartFile ficheiro) throws Exception {
-        File caminhos = new File("FICHEIROS_PEERS_USER/" + ficheiro.getOriginalFilename());
-
+    public ArrayList<String> upload(@RequestParam("ficheiro") MultipartFile ficheiro) throws Exception {
         Path destino = Paths.get("FICHEIROS_PEERS_USER", ficheiro.getOriginalFilename());
         Files.createDirectories(destino.getParent());
         ficheiro.transferTo(destino);
-        funcionalidades.enviarFicheiro(Arquivo.Criar_chunks(caminhos.getName(),caminhos.getAbsolutePath()));
 
-        return "Tentanto";
+        File caminhos = new File("FICHEIROS_PEERS_USER/" + ficheiro.getOriginalFilename());
+
+        return funcionalidades.enviarFicheiro(Arquivo.Criar_chunks(caminhos.getName(),caminhos.getAbsolutePath()));
     }
 
 
