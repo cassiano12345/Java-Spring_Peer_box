@@ -111,18 +111,23 @@ function enviarFicheiro() {
 }
 
 async function fazerDownload(nome) {
+
+    adicionarLog("Download iniciado.");
     const response = await fetch("/peer/retrieve?nome=" + encodeURIComponent(nome), {
         method: "POST"
     });
 
-    const resultados = await response.text();
-    const mensagensArray = JSON.parse(resultados);
+    const blob = await response.blob();
 
-    for (const msg of mensagensArray) {
-        console.log(msg);
-        adicionarLog(msg);
-    }
-    adicionarLog("Download iniciado.");
+    const url = window.URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = nome;
+
+    a.click();
+
+    window.URL.revokeObjectURL(url);
 
 }
 

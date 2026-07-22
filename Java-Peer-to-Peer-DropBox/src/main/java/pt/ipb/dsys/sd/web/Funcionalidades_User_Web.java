@@ -25,6 +25,7 @@ public class Funcionalidades_User_Web implements PeerAPI{
     private static final Logger logger = LoggerFactory.getLogger(Main_sender.class);
     private ArrayList<String> mensagem = new ArrayList<>();
     Map<String, Map<Integer, File_receber_ficheiro>> chunksList = new HashMap<>(); // Criar um objeto map do tipo File_enviar_chunk para receber os chunks.
+    File ficheiro_final;
 
     @Override
     public ArrayList<String> enviarFicheiro(String nome) throws Exception {
@@ -65,7 +66,7 @@ public class Funcionalidades_User_Web implements PeerAPI{
     }
 
     @Override
-    public void recuperarFicheiro(String pathname) throws Exception {
+    public File recuperarFicheiro(String pathname) throws Exception {
         ConnectionManager connection = new ConnectionManager();
         connection.userChannel.connect(InetAddress.getLocalHost().getHostName());
         File_receber_ficheiro filePedirFicheiro = new File_receber_ficheiro(InetAddress.getLocalHost().getHostName());
@@ -83,6 +84,7 @@ public class Funcionalidades_User_Web implements PeerAPI{
                             pasta.mkdirs();
                         }
                         File ficheiro = new File("FICHEIROS_PEERS_USER/" + chunk.getNome_ficheiro());
+                        setFicheiro_final(ficheiro);
                         if (!ficheiro.exists()){
                             Map<Integer, File_receber_ficheiro> chunksRecebidos = chunksList.computeIfAbsent(chunk.getSha256(), k -> new HashMap<>());
                             try {
@@ -109,7 +111,7 @@ public class Funcionalidades_User_Web implements PeerAPI{
         filePedirFicheiro.setNome_ficheiro(pathname);
         connection.sendToPeers(filePedirFicheiro);
         Thread.sleep(1000);
-
+        return ficheiro_final;
     }
 
     @Override
@@ -199,5 +201,9 @@ public class Funcionalidades_User_Web implements PeerAPI{
         File_listar_ficheiros fileInformacoesLocais = new File_listar_ficheiros(InetAddress.getLocalHost().getHostName());
         connection.sendToPeers(fileInformacoesLocais);
 
+    }
+
+    public void setFicheiro_final(File ficheiro_final) {
+        this.ficheiro_final = ficheiro_final;
     }
 }

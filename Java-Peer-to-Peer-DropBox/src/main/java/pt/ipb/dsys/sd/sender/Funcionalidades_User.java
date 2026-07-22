@@ -48,11 +48,12 @@ public class Funcionalidades_User implements PeerAPI {
     }
 
     @Override
-    public void recuperarFicheiro(String pathname) throws Exception {
+    public File recuperarFicheiro(String pathname) throws Exception {
         connection.userChannel.connect(InetAddress.getLocalHost().getHostName());
         File_receber_ficheiro filePedirFicheiro = new File_receber_ficheiro(InetAddress.getLocalHost().getHostName());
         filePedirFicheiro.setNome_ficheiro(pathname);
         connection.sendToPeers(filePedirFicheiro);
+        return null;
     }
 
     @Override

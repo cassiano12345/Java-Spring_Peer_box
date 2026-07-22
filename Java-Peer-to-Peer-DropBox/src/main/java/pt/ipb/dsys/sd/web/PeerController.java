@@ -1,19 +1,19 @@
 package pt.ipb.dsys.sd.web;
 
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import pt.ipb.dsys.sd.comum.ficheiros.Arquivo;
 import pt.ipb.dsys.sd.comum.protocolo.File_listar_ficheiros;
 import pt.ipb.dsys.sd.comum.protocolo.File_status_peers;
-import pt.ipb.dsys.sd.sender.Funcionalidades_User;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -50,10 +50,16 @@ public class PeerController {
     }
 
     @PostMapping("/retrieve")
-    public String recuperarFicheiro(@RequestParam String nome) throws Exception {
+    public ResponseEntity<Resource> recuperarFicheiro(@RequestParam String nome) throws Exception {
+        File ficheiro = funcionalidades.recuperarFicheiro(nome);
 
-        funcionalidades.recuperarFicheiro(nome);
-        return "Pedido de recuperação enviado.";
+        Resource resource = new FileSystemResource(ficheiro);
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename=\"" + ficheiro.getName() + "\"")
+                .contentLength(ficheiro.length())
+                .body(resource);
     }
 
     @GetMapping("/list")
