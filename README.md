@@ -34,3 +34,6 @@ Para melhor comunicação entre os usuarios e os peers, foram criadas classes qu
 
 - Link página oficial Spring boot <br/>
 https://spring.io/projects/spring-boot
+
+- Link da Maven Central Repository <br/>
+https://central.sonatype.com/?smo=true
