@@ -17,3 +17,8 @@ Para melhor comunicação entre os usuarios e os peers, foram criadas classes qu
 - File_listar_ficheiros: A classe foi criada com objetivo, de criar objetos para obter a lista de ficheiros de cada objeto, cada objeto desta classe contem: Uma lista do tipo FicheiroInfo( onde cada objeto da lista contem: Nome do ficheiro, tamanho e numero de chunks), Cluster do cliente, e Cluster do Servidor.
 
 - File_status_peer: A classe foi criada, com objetivo de criar objetos para obter o estado de cada peer, cada objeto da classe contem: Cluster do cliente que fez o pedido, ID_peer(Identificador logico de cada peer), IP do peer, estado do peer(ativo, desativado), numero de ficheiros, e uma String de mensagem.
+
+
+### Imagens
+
+***Página interface Web*** <br/>
