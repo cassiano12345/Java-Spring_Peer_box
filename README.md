@@ -31,5 +31,6 @@ Para melhor comunicação entre os usuarios e os peers, foram criadas classes qu
 </p>
 
 ***Links*** <br/>
-- Link página oficial Spring boot
+
+- Link página oficial Spring boot <br/>
 https://spring.io/projects/spring-boot
