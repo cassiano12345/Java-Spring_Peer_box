@@ -22,3 +22,6 @@ Para melhor comunicação entre os usuarios e os peers, foram criadas classes qu
 ### Imagens
 
 ***Página interface Web*** <br/>
+<p align="center">
+  <img src="Imagens_Aplicação/Pagina principal desktop.png" alt="OpenMontage" width="230">
+</p>
