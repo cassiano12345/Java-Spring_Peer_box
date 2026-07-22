@@ -5,12 +5,14 @@ import org.jgroups.Receiver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pt.ipb.dsys.sd.comum.ConnectionManager;
+import pt.ipb.dsys.sd.comum.ficheiros.Arquivo;
 import pt.ipb.dsys.sd.comum.peerapi.PeerAPI;
 import pt.ipb.dsys.sd.comum.protocolo.*;
 import pt.ipb.dsys.sd.comum.ficheiros.FileChunk;
 import pt.ipb.dsys.sd.sender.Main_sender;
 
 
+import java.io.File;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +23,10 @@ public class Funcionalidades_User_Web implements PeerAPI{
     //private static List<File_status_peers> statusPeers = new ArrayList<>();
 
     @Override
-    public ArrayList<String> enviarFicheiro(List<FileChunk> chunk) throws Exception {
+    public ArrayList<String> enviarFicheiro(String nome) throws Exception {
+        File caminhos = new File("FICHEIROS_PEERS_USER/" + nome);
+        List<FileChunk> chunk = Arquivo.Criar_chunks(caminhos.getName(),caminhos.getAbsolutePath());
+
         ConnectionManager connection = new ConnectionManager();
         connection.userChannel.connect(InetAddress.getLocalHost().getHostName());
         ArrayList<String> mensagem_enviar_ficheiro = new ArrayList<>();
@@ -51,6 +56,7 @@ public class Funcionalidades_User_Web implements PeerAPI{
         }
 
         Thread.sleep(1000);
+        caminhos.delete();
         return mensagem_enviar_ficheiro;
     }
 

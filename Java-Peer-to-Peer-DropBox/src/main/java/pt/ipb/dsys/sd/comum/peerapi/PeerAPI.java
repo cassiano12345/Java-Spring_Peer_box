@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface PeerAPI {
 
-    ArrayList<String> enviarFicheiro(List<FileChunk> chunks) throws Exception;
+    ArrayList<String> enviarFicheiro(String pathname) throws Exception;
 
     void recuperarFicheiro(String pathname) throws Exception;
 

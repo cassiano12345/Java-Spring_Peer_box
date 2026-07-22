@@ -5,10 +5,12 @@ import org.jgroups.Receiver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pt.ipb.dsys.sd.comum.ConnectionManager;
+import pt.ipb.dsys.sd.comum.ficheiros.Arquivo;
 import pt.ipb.dsys.sd.comum.peerapi.PeerAPI;
 import pt.ipb.dsys.sd.comum.protocolo.*;
 import pt.ipb.dsys.sd.comum.ficheiros.FileChunk;
 
+import java.io.File;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +29,9 @@ public class Funcionalidades_User implements PeerAPI {
     }
 
     @Override
-    public ArrayList<String> enviarFicheiro(List<FileChunk> chunk) throws Exception {
+    public ArrayList<String> enviarFicheiro(String path) throws Exception {
+        File caminhos = new File(path);
+        List<FileChunk> chunk = Arquivo.Criar_chunks(caminhos.getName(),caminhos.getAbsolutePath());
         connection.userChannel.connect(InetAddress.getLocalHost().getHostName());
         for (FileChunk chunks : chunk) {
             File_enviar_chunk msg = new File_enviar_chunk(

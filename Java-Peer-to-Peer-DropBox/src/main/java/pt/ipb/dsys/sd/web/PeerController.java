@@ -39,9 +39,7 @@ public class PeerController {
         Files.createDirectories(destino.getParent());
         ficheiro.transferTo(destino);
 
-        File caminhos = new File("FICHEIROS_PEERS_USER/" + ficheiro.getOriginalFilename());
-
-        return funcionalidades.enviarFicheiro(Arquivo.Criar_chunks(caminhos.getName(),caminhos.getAbsolutePath()));
+        return funcionalidades.enviarFicheiro(ficheiro.getOriginalFilename());
     }
 
 

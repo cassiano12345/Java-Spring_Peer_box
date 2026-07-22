@@ -70,7 +70,7 @@ public class Janela extends JFrame {
                 //Criar SHA256 e enviar chunks
                 try {
                     Funcionalidades_User funcionalidadesUser = new Funcionalidades_User();
-                    funcionalidadesUser.enviarFicheiro(Arquivo.Criar_chunks(nome_ficheiro.get(),txtCaminho.getText()));
+                    funcionalidadesUser.enviarFicheiro(txtCaminho.getText());
                 } catch (NoSuchAlgorithmException ex) {
                     throw new RuntimeException(ex);
                 } catch (Exception ex) {
