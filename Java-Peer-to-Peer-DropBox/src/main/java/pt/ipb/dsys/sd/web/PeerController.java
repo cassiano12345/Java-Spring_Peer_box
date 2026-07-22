@@ -39,22 +39,21 @@ public class PeerController {
         Files.createDirectories(destino.getParent());
         ficheiro.transferTo(destino);
 
-        return funcionalidades.enviarFicheiro(ficheiro.getOriginalFilename());
+        return funcionalidades.Share(ficheiro.getOriginalFilename());
     }
-
 
     @PostMapping("/delete")
     public ArrayList<String> apagarFicheiro(@RequestParam String nome) throws Exception {
 
-        return funcionalidades.apagarFicheiro(nome);
+        return funcionalidades.Delete(nome);
     }
 
-    @PostMapping("/retrieve")
+    @GetMapping("/retrieve")
     public ResponseEntity<Resource> recuperarFicheiro(@RequestParam String nome) throws Exception {
-        File ficheiro = funcionalidades.recuperarFicheiro(nome);
+        File ficheiro = funcionalidades.Retrieve(nome);
 
         Resource resource = new FileSystemResource(ficheiro);
-        
+
         new Thread(() -> {
             try {
                 Thread.sleep(5000); // espera 5 segundos
@@ -74,7 +73,7 @@ public class PeerController {
     public List<File_listar_ficheiros> listarFicheiros() throws Exception {
 
 
-        return funcionalidades.listarFicheiros();
+        return funcionalidades.List_Files();
     }
 
     @GetMapping("/metadata")

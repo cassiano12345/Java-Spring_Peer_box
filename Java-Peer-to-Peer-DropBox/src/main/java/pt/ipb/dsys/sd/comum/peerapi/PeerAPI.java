@@ -1,7 +1,5 @@
 package pt.ipb.dsys.sd.comum.peerapi;
 
-import pt.ipb.dsys.sd.comum.ficheiros.FileChunk;
-import pt.ipb.dsys.sd.comum.protocolo.File_enviar_chunk;
 import pt.ipb.dsys.sd.comum.protocolo.File_listar_ficheiros;
 import pt.ipb.dsys.sd.comum.protocolo.File_status_peers;
 
@@ -11,17 +9,17 @@ import java.util.List;
 
 public interface PeerAPI {
 
-    ArrayList<String> enviarFicheiro(String pathname) throws Exception;
+    ArrayList<String> Share(String pathname) throws Exception; //Enviar ficheiros
 
-    File recuperarFicheiro(String pathname) throws Exception;
+    File Retrieve(String pathname) throws Exception; // Receber ficheiros
 
-    ArrayList<String> apagarFicheiro(String pathname) throws Exception;
+    ArrayList<String> Delete(String pathname) throws Exception; // Apagar ficheiros
 
-    List<File_listar_ficheiros> listarFicheiros() throws Exception;
+    List<File_listar_ficheiros> List_Files() throws Exception; // Listar ficheiros
 
-    void recuperarMetadata(String pathname) throws Exception;
+    List<File_status_peers> peersAtivos() throws Exception; // Obter informações de peers ativos
 
-    List<File_status_peers> peersAtivos() throws Exception;
+    // Fazer futuramente...
 
-    void informacoesLocais() throws Exception;
+    void Obter_Metadata(String pathname) throws Exception;
 }

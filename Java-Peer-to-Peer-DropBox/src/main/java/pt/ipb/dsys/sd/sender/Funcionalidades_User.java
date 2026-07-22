@@ -29,7 +29,7 @@ public class Funcionalidades_User implements PeerAPI {
     }
 
     @Override
-    public ArrayList<String> enviarFicheiro(String path) throws Exception {
+    public ArrayList<String> Share(String path) throws Exception {
         File caminhos = new File(path);
         List<FileChunk> chunk = Arquivo.Criar_chunks(caminhos.getName(),caminhos.getAbsolutePath());
         connection.userChannel.connect(InetAddress.getLocalHost().getHostName());
@@ -48,7 +48,7 @@ public class Funcionalidades_User implements PeerAPI {
     }
 
     @Override
-    public File recuperarFicheiro(String pathname) throws Exception {
+    public File Retrieve(String pathname) throws Exception {
         connection.userChannel.connect(InetAddress.getLocalHost().getHostName());
         File_receber_ficheiro filePedirFicheiro = new File_receber_ficheiro(InetAddress.getLocalHost().getHostName());
         filePedirFicheiro.setNome_ficheiro(pathname);
@@ -57,7 +57,7 @@ public class Funcionalidades_User implements PeerAPI {
     }
 
     @Override
-    public ArrayList<String> apagarFicheiro(String pathname) throws Exception {
+    public ArrayList<String> Delete(String pathname) throws Exception {
         connection.userChannel.connect(InetAddress.getLocalHost().getHostName());
         File_apagar_ficheiro fileApagarFicheiro = new File_apagar_ficheiro(InetAddress.getLocalHost().getHostName());
         fileApagarFicheiro.setNome_ficheiro(pathname);
@@ -66,7 +66,7 @@ public class Funcionalidades_User implements PeerAPI {
     }
 
     @Override
-    public List<File_listar_ficheiros> listarFicheiros() throws Exception {
+    public List<File_listar_ficheiros> List_Files() throws Exception {
         List<File_listar_ficheiros> fileListarFicheiros = new ArrayList<>();
         connection.userChannel.connect(InetAddress.getLocalHost().getHostName());
 
@@ -86,11 +86,6 @@ public class Funcionalidades_User implements PeerAPI {
         //Thread.sleep(2000);
 
         return new ArrayList<>(fileListarFicheiros);
-    }
-
-    @Override
-    public void recuperarMetadata(String pathname) throws Exception {
-
     }
 
     @Override
@@ -119,11 +114,10 @@ public class Funcionalidades_User implements PeerAPI {
         return new ArrayList<>(statusPeers);
     }
 
+
+    // Fazer futuramente
     @Override
-    public void informacoesLocais() throws Exception {
-        connection.userChannel.connect(InetAddress.getLocalHost().getHostName());
-        File_listar_ficheiros fileInformacoesLocais = new File_listar_ficheiros(InetAddress.getLocalHost().getHostName());
-        connection.sendToPeers(fileInformacoesLocais);
+    public void Obter_Metadata(String pathname) throws Exception {
 
     }
 }

@@ -31,7 +31,7 @@ public class Main_sender {
             janela.setVisible(true);
         });
         Funcionalidades_User funcionalidadesUser = new Funcionalidades_User();
-        funcionalidadesUser.listarFicheiros();//Atualizar a tabela
+        funcionalidadesUser.List_Files();//Atualizar a tabela
         connection.setUserReceiver(new Receiver() {
             @Override
             public void receive(Message msg) {

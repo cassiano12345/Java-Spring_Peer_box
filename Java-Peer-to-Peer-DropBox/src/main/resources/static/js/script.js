@@ -6,10 +6,6 @@ window.onload = function () {
 
     document.getElementById("btnEnviarFicheiro").addEventListener("click", enviarFicheiro);
 
-    document.getElementById("btnDownload").addEventListener("click", fazerDownload);
-
-    document.getElementById("btnApagar").addEventListener("click", apagarFicheiro);
-
     document.getElementById("inputFicheiro").addEventListener("change", async function () {
 
         const ficheiro = this.files[0];
@@ -94,7 +90,7 @@ async function fazerDownload(nome) {
 
     adicionarLog("Download iniciado.");
     const response = await fetch("/peer/retrieve?nome=" + encodeURIComponent(nome), {
-        method: "POST"
+        method: "GET"
     });
 
     const blob = await response.blob();

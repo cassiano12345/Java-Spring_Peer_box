@@ -70,7 +70,7 @@ public class Janela extends JFrame {
                 //Criar SHA256 e enviar chunks
                 try {
                     Funcionalidades_User funcionalidadesUser = new Funcionalidades_User();
-                    funcionalidadesUser.enviarFicheiro(txtCaminho.getText());
+                    funcionalidadesUser.Share(txtCaminho.getText());
                 } catch (NoSuchAlgorithmException ex) {
                     throw new RuntimeException(ex);
                 } catch (Exception ex) {
@@ -97,7 +97,7 @@ public class Janela extends JFrame {
 
                 Funcionalidades_User funcionalidadesUser = new Funcionalidades_User();
                 try {
-                    funcionalidadesUser.recuperarFicheiro(nome);
+                    funcionalidadesUser.Retrieve(nome);
                 } catch (Exception ex) {
                     throw new RuntimeException(ex);
                 }
@@ -117,7 +117,7 @@ public class Janela extends JFrame {
 
                 Funcionalidades_User funcionalidadesUser = new Funcionalidades_User();
             try {
-                funcionalidadesUser.apagarFicheiro(nome);
+                funcionalidadesUser.Delete(nome);
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
@@ -193,7 +193,7 @@ public class Janela extends JFrame {
         // Fazer depois
         Funcionalidades_User funcionalidadesUser = new Funcionalidades_User();
         try {
-            funcionalidadesUser.listarFicheiros();
+            funcionalidadesUser.List_Files();
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
