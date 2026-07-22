@@ -22,6 +22,7 @@ Para melhor comunicação entre os usuarios e os peers, foram criadas classes qu
 ### Imagens
 
 ***Página interface Web*** <br/>
+A imagem a baixo mostra a página principal da interface web, onde é possível ver a caixa de logs, os botões para atualizar a tabela dos peers, e para enviar ficheiros para os peers, mais a baixo é possivel observar a tabela com informação dos peers em ativo.
 <p align="center">
   <img src="Imagens_Aplicação/Pagina web 1.png" alt="OpenMontage" width="700">
 </p>
