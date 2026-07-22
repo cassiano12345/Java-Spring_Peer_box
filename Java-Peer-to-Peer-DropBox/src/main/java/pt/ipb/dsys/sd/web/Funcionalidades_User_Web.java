@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pt.ipb.dsys.sd.comum.ConnectionManager;
 import pt.ipb.dsys.sd.comum.ficheiros.Arquivo;
+import pt.ipb.dsys.sd.comum.ficheiros.FileAssembler;
 import pt.ipb.dsys.sd.comum.peerapi.PeerAPI;
 import pt.ipb.dsys.sd.comum.protocolo.*;
 import pt.ipb.dsys.sd.comum.ficheiros.FileChunk;
@@ -13,14 +14,17 @@ import pt.ipb.dsys.sd.sender.Main_sender;
 
 
 import java.io.File;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Funcionalidades_User_Web implements PeerAPI{
     private static final Logger logger = LoggerFactory.getLogger(Main_sender.class);
     private ArrayList<String> mensagem = new ArrayList<>();
-    //private static List<File_status_peers> statusPeers = new ArrayList<>();
+    Map<String, Map<Integer, File_receber_ficheiro>> chunksList = new HashMap<>(); // Criar um objeto map do tipo File_enviar_chunk para receber os chunks.
 
     @Override
     public ArrayList<String> enviarFicheiro(String nome) throws Exception {
@@ -65,8 +69,47 @@ public class Funcionalidades_User_Web implements PeerAPI{
         ConnectionManager connection = new ConnectionManager();
         connection.userChannel.connect(InetAddress.getLocalHost().getHostName());
         File_receber_ficheiro filePedirFicheiro = new File_receber_ficheiro(InetAddress.getLocalHost().getHostName());
+
+        connection.setUserReceiver(new Receiver() {
+            @Override
+            public void receive(Message msg) {
+                if (msg.getObject() instanceof File_receber_ficheiro) { // Verificando se o objeto recebido pelo user é do tipo File_enviar_chunk.
+                    File_receber_ficheiro chunk = (File_receber_ficheiro) msg.getObject();
+                    chunksList.computeIfAbsent(chunk.getSha256(), k -> new HashMap<>()).put(chunk.getNumero(), chunk); // Passando o chunk para o Map onde primeiro cria o map com a SHA256, dps cria um map com o num do chunk, e dentro guarda o chunk recebido.
+                    logger.info("Recebido chunk {}", chunk.getNumero());
+                    if (chunksList.get(chunk.getSha256()).size() == chunk.getTotalChunks()) { // Verificar se o numero de chunks para o determinado SHA256 é igual ao total de chunks que deve receber
+                        File pasta = new File("FICHEIROS_PEERS_USER"); // Criar a pasta para guardar os ficheiros.
+                        if (!pasta.exists()) {
+                            pasta.mkdirs();
+                        }
+                        File ficheiro = new File("FICHEIROS_PEERS_USER/" + chunk.getNome_ficheiro());
+                        if (!ficheiro.exists()){
+                            Map<Integer, File_receber_ficheiro> chunksRecebidos = chunksList.computeIfAbsent(chunk.getSha256(), k -> new HashMap<>());
+                            try {
+                                FileAssembler.reconstruirFicheiro_receber(chunksRecebidos,"FICHEIROS_PEERS_USER/" + chunk.getNome_ficheiro()); // Reconstruir o ficheiro e guardar na pasta downloads
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                            //janela.mostrarAlerta("Ficheiro recebido!");
+                            chunksList.remove(chunk.getSha256());
+                        }else{
+                            chunksList.remove(chunk.getSha256());
+
+                            //janela.adicionarLog("O ficheiro ja existe no diretorio!");
+                            //janela.mostrarAlerta("O ficheiro ja existe no diretorio, mude de nome ou envie um novo ficheiro!");
+                        }//
+                    }
+                }
+            }
+        });
+
+
+
+
         filePedirFicheiro.setNome_ficheiro(pathname);
         connection.sendToPeers(filePedirFicheiro);
+        Thread.sleep(1000);
+
     }
 
     @Override

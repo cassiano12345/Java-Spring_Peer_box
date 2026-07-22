@@ -110,8 +110,18 @@ function enviarFicheiro() {
 
 }
 
-function fazerDownload() {
+async function fazerDownload(nome) {
+    const response = await fetch("/peer/retrieve?nome=" + encodeURIComponent(nome), {
+        method: "POST"
+    });
 
+    const resultados = await response.text();
+    const mensagensArray = JSON.parse(resultados);
+
+    for (const msg of mensagensArray) {
+        console.log(msg);
+        adicionarLog(msg);
+    }
     adicionarLog("Download iniciado.");
 
 }
@@ -152,7 +162,7 @@ async function listarficehiros() {
                 <td>${peer.cluster_SERVIDOR}</td>
                 <td>${ficheiro.numeroChunks}</td>
                 <td>
-                <button onclick="downloadFicheiro('${peer.cluster_SERVIDOR}', '${ficheiro.nome}')">
+                <button onclick="fazerDownload('${ficheiro.nome}')">
                     ⬇️ Download
                 </button>
 

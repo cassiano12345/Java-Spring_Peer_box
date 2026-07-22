@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import pt.ipb.dsys.sd.comum.ConnectionManager;
 import pt.ipb.dsys.sd.comum.ficheiros.FileChunk;
 import pt.ipb.dsys.sd.comum.protocolo.File_enviar_chunk;
+import pt.ipb.dsys.sd.comum.protocolo.File_receber_ficheiro;
 
 import java.util.List;
 
@@ -16,13 +17,13 @@ public class Funcionalidades_Peer {
         ConnectionManager connection = new ConnectionManager();
         connection.userChannel.connect(cluster_user);
         for (FileChunk chunks : chunk) {
-            File_enviar_chunk msg = new File_enviar_chunk(
-                    chunks.getNome_ficheiro(),
-                    chunks.getSha256(),
-                    chunks.getNumero(),
-                    chunk.size(),
-                    cluster_user,
-                    chunks.getDados());
+            File_receber_ficheiro msg = new File_receber_ficheiro(cluster_user);
+
+            msg.setNome_ficheiro(chunks.getNome_ficheiro());
+            msg.setSha256(chunks.getSha256());
+            msg.setNumero(chunks.getNumero());
+            msg.setTotalChunks(chunk.size());
+            msg.setDados(chunks.getDados());
             logger.info("Enviado chunk {}", chunks.getNumero());
             connection.sendToUser(msg);
         }

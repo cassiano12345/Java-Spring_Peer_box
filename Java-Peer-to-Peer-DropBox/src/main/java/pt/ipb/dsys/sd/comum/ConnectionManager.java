@@ -30,10 +30,10 @@ public class ConnectionManager {
 
     public ConnectionManager() throws Exception {
 
-        peerBoxChannel = new JChannel(gossipRouter());
+        peerBoxChannel = new JChannel();
         peerBoxChannel.connect("peer-box");
 
-        userChannel = new JChannel(gossipRouter());
+        userChannel = new JChannel();
     }
 
     public void setPeerBoxReceiver(Receiver receiver) {

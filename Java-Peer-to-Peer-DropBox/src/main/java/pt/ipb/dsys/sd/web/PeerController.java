@@ -49,7 +49,7 @@ public class PeerController {
         return funcionalidades.apagarFicheiro(nome);
     }
 
-    @GetMapping("/retrieve")
+    @PostMapping("/retrieve")
     public String recuperarFicheiro(@RequestParam String nome) throws Exception {
 
         funcionalidades.recuperarFicheiro(nome);

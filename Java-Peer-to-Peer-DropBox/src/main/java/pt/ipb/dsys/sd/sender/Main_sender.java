@@ -24,7 +24,7 @@ public class Main_sender {
     public static void main(String[] args) throws Exception {
         ConnectionManager connection = new ConnectionManager();
         connection.userChannel.connect(InetAddress.getLocalHost().getHostName());
-        Map<String, Map<Integer, File_enviar_chunk>> chunksList = new HashMap<>(); // Criar um objeto map do tipo File_enviar_chunk para receber os chunks.
+        Map<String, Map<Integer, File_receber_ficheiro>> chunksList = new HashMap<>(); // Criar um objeto map do tipo File_enviar_chunk para receber os chunks.
 
         // Criando um objeto do tipo janela, e abrindo ela.
         SwingUtilities.invokeLater(() -> {
@@ -65,6 +65,33 @@ public class Main_sender {
                         janela.adicionarLog(resposta.getResposta());
                     } catch (Exception e) {
                         throw new RuntimeException(e);
+                    }
+                }
+                else if (msg.getObject() instanceof File_receber_ficheiro) { // Verificando se o objeto recebido pelo user é do tipo File_enviar_chunk.
+                    File_receber_ficheiro chunk = (File_receber_ficheiro) msg.getObject();
+                    chunksList.computeIfAbsent(chunk.getSha256(), k -> new HashMap<>()).put(chunk.getNumero(), chunk); // Passando o chunk para o Map onde primeiro cria o map com a SHA256, dps cria um map com o num do chunk, e dentro guarda o chunk recebido.
+                    logger.info("Recebido chunk {}", chunk.getNumero());
+                    if (chunksList.get(chunk.getSha256()).size() == chunk.getTotalChunks()) { // Verificar se o numero de chunks para o determinado SHA256 é igual ao total de chunks que deve receber
+                        File pasta = new File("FICHEIROS_PEERS_USER"); // Criar a pasta para guardar os ficheiros.
+                        if (!pasta.exists()) {
+                            pasta.mkdirs();
+                        }
+                        File ficheiro = new File("FICHEIROS_PEERS_USER/" + chunk.getNome_ficheiro());
+                        if (!ficheiro.exists()){
+                            Map<Integer, File_receber_ficheiro> chunksRecebidos = chunksList.computeIfAbsent(chunk.getSha256(), k -> new HashMap<>());
+                            try {
+                                FileAssembler.reconstruirFicheiro_receber(chunksRecebidos,"FICHEIROS_PEERS_USER/" + chunk.getNome_ficheiro()); // Reconstruir o ficheiro e guardar na pasta downloads
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                            janela.mostrarAlerta("Ficheiro recebido!");
+                            chunksList.remove(chunk.getSha256());
+                        }else{
+                            chunksList.remove(chunk.getSha256());
+
+                            janela.adicionarLog("O ficheiro ja existe no diretorio!");
+                            //janela.mostrarAlerta("O ficheiro ja existe no diretorio, mude de nome ou envie um novo ficheiro!");
+                        }//
                     }
                 }
                 else {
