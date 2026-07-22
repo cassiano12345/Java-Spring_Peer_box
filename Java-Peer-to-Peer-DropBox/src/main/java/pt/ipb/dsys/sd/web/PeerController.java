@@ -54,6 +54,14 @@ public class PeerController {
         File ficheiro = funcionalidades.recuperarFicheiro(nome);
 
         Resource resource = new FileSystemResource(ficheiro);
+        
+        new Thread(() -> {
+            try {
+                Thread.sleep(5000); // espera 5 segundos
+                ficheiro.delete();
+            } catch (InterruptedException ignored) {
+            }
+        }).start();
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION,
