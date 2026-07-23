@@ -3,23 +3,14 @@ package pt.ipb.dsys.sd.comum;
 import org.jgroups.JChannel;
 import org.jgroups.ObjectMessage;
 import org.jgroups.Receiver;
-import org.jgroups.JChannel;
-import org.jgroups.Message;
-import org.jgroups.ObjectMessage;
-import org.jgroups.Receiver;
 import org.jgroups.protocols.*;
-import org.jgroups.protocols.pbcast.GMS;
-import org.jgroups.protocols.pbcast.NAKACK2;
-import org.jgroups.protocols.pbcast.STABLE;
 import org.jgroups.stack.Protocol;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pt.ipb.dsys.sd.peer.Main_peer;
-
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ConnectionManager {
@@ -81,45 +72,4 @@ public class ConnectionManager {
         return protocols;
     }
 
-/*
-    public static List<Protocol> gossipRouter() throws UnknownHostException {
-        TUNNEL tunnel = new TUNNEL();
-
-        try {
-            InetAddress.getByName("gossip-router");
-            logger.info("Found gossip router (using gossip-router)");
-            tunnel.setGossipRouterHosts("gossip-router[12001]");
-        }
-        catch(UnknownHostException e) {
-            logger.info("Using localhost gossip router");
-            tunnel.setGossipRouterHosts("127.0.0.1[12001]");
-        }
-
-        return Arrays.asList(
-                tunnel,
-
-                // Descoberta e gestão do cluster
-                new MERGE3(),
-                new FD_SOCK(),
-                new FD_ALL3(),
-                new VERIFY_SUSPECT(),
-
-                // Fiabilidade
-                new NAKACK2(),
-                new UNICAST3(),
-                new STABLE(),
-                new PING(),
-
-                // Gestão do grupo
-                new GMS(),
-
-                // Controlo de fluxo
-                new UFC(),
-                new MFC(),
-
-                // Fragmentação
-                new FRAG4()
-        );
-    }
-*/
 }

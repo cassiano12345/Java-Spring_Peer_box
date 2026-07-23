@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class FileAssembler {
 
-    // Função tranformar os chunks em ficheiro.
+    // Função tranformar os chunks em ficheiro do lado do peer.
     public static void reconstruirFicheiro(Map<Integer, File_enviar_chunk> chunks,String caminhoDestino) throws IOException {
 
         File ficheiro = new File(caminhoDestino);
@@ -28,7 +28,7 @@ public class FileAssembler {
             }
         }
     }
-
+    // Função tranformar os chunks em ficheiro do lado do do user.
     public static void reconstruirFicheiro_receber(Map<Integer, File_receber_ficheiro> chunks, String caminhoDestino) throws IOException {
 
         File ficheiro = new File(caminhoDestino);

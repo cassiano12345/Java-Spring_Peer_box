@@ -83,7 +83,6 @@ public class Funcionalidades_User implements PeerAPI {
         });
 
         connection.sendToPeers(fileListarFicheiros1);
-        //Thread.sleep(2000);
 
         return new ArrayList<>(fileListarFicheiros);
     }

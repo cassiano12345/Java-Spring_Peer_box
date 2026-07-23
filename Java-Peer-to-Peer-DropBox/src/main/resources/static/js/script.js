@@ -50,6 +50,7 @@ function adicionarLog(texto) {
 }
 
 async function atualizarPeers() {
+    adicionarLog("A obter peers... ");
     const response = await fetch("/peer/peers");
     const peers = await response.json();
     console.log(peers);
@@ -108,6 +109,7 @@ async function fazerDownload(nome) {
 }
 
 async function apagarFicheiro(nome) {
+    adicionarLog("Apagando: " + nome);
     const response = await fetch("/peer/delete?nome=" + encodeURIComponent(nome), {
         method: "POST"
     });

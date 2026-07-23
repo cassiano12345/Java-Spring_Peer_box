@@ -105,9 +105,6 @@ public class Funcionalidades_User_Web implements PeerAPI{
             }
         });
 
-
-
-
         filePedirFicheiro.setNome_ficheiro(pathname);
         connection.sendToPeers(filePedirFicheiro);
         Thread.sleep(1000);
@@ -120,7 +117,6 @@ public class Funcionalidades_User_Web implements PeerAPI{
         ConnectionManager connection = new ConnectionManager();
         connection.userChannel.connect(InetAddress.getLocalHost().getHostName());
         File_apagar_ficheiro fileApagarFicheiro = new File_apagar_ficheiro(InetAddress.getLocalHost().getHostName());
-
 
         connection.setUserReceiver(new Receiver() {
             @Override
@@ -183,7 +179,6 @@ public class Funcionalidades_User_Web implements PeerAPI{
 
         fileStatusPeers.setMensagem("Ola, tem algum peer ativo?");
         connection.sendToPeers(fileStatusPeers);
-
         Thread.sleep(5000);
 
         return new ArrayList<>(statusPeers);
