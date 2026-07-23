@@ -23,6 +23,15 @@ Para melhor comunicação entre os usuarios e os peers, foram criadas classes qu
 
 - File_status_peer: A classe foi criada, com objetivo de criar objetos para obter o estado de cada peer, cada objeto da classe contem: Cluster do cliente que fez o pedido, ID_peer(Identificador logico de cada peer), IP do peer, estado do peer(ativo, desativado), numero de ficheiros, e uma String de mensagem.
 
+### Diagramas
+***Interação Interface Desktop-Peers(Docker)***
+
+
+<br/>
+
+***Interação Interface web(Spring boot)-Peers(Docker)***
+
+
 
 ### Imagens
 
