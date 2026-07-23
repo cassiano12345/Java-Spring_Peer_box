@@ -33,7 +33,7 @@ Para melhor comunicação entre os usuarios e os peers, foram criadas classes qu
 
 ***Interação Interface web(Spring boot)-Peers(Docker)***
 <p align="center">
-  <img src="Imagens_Aplicação/Diagrama Web.png" alt="OpenMontage" width="700">
+  <img src="Imagens_Aplicação/Diagrama web.png" alt="OpenMontage" width="700">
 </p> <br/>
 
 
