@@ -30,6 +30,18 @@ Ficheiro -> src -> Main -> Java -> pt.ipb.dsys.sd -> comum -> ConnectionManager.
 
 O ficheiro ConnectionManager.java foi feito para criar a conexão com o Jgroups, e nele é possivel encontrar o gossipRouter(), que é ul Tunnel que facilita a conexão com os peers dentro do ambiente docker.
 
+***API peers***
+
+Ficheiro -> src -> Main -> Java -> pt.ipb.dsys.sd -> comum -> peerapi -> PeerAPI.java
+
+Foi criada uma interface API, que mostra e define quais são as funcionalidades que os peers têm a oferecer, e foram usadas tanto no usuario da desktop interface em (...sender -> Funcionalidades_User.java), bem como para o usuario de interface web em (...web -> Funcionalidades_User_Web.java).
+
+***Conversão para Chunks***
+
+Ficheiro -> src -> Main -> Java -> pt.ipb.dsys.sd -> comum -> ficheiros -> Arquivo.java
+
+A classe Arquivo serve para criar o FileID Sha256, e para converter os ficheiros em chunks de 64 bytes, no final  a função "Criar_chunks()" retorna uma List<FileChunk> com todos os chunks do ficheiro para posteriormente ser enviado para os peers.
+
 
 ### Diagramas
 ***Interação Interface Desktop-Peers(Docker)***
