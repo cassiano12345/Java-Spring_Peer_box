@@ -7,7 +7,8 @@ O presente projeto tem como objetivo simular um dropbox, onde os Peers ficam em 
 Fazer o docker compose up ao ficheiro, presente na pasta docker, compilar o Main da interface desktop em (src -> java -> pt/ipb/dsys/sd/sender -> Main_sender.java), e tera acesso a interface desktop, para ter acessos a interface web basta compilar o Main do Spring boot em (src -> java -> pt/ipb/dsys/sd/web -> PeerboxApplication.java), e através do browser entrar em "localhost:8080".
 
 
-### Protocolo de comunição entre Interfaces e Peers
+### Funcionalidades e pontos a destacar
+***Protocolo de comunição entre Interfaces e Peers***
 
 Pasta -> src -> Main -> Java -> pt.ipb.dsys.sd -> comum -> protocolo
 
@@ -23,14 +24,37 @@ Para melhor comunicação entre os usuarios e os peers, foram criadas classes qu
 
 - File_status_peer: A classe foi criada, com objetivo de criar objetos para obter o estado de cada peer, cada objeto da classe contem: Cluster do cliente que fez o pedido, ID_peer(Identificador logico de cada peer), IP do peer, estado do peer(ativo, desativado), numero de ficheiros, e uma String de mensagem.
 
+***Comunicação Jgroups***
+
+Ficheiro -> src -> Main -> Java -> pt.ipb.dsys.sd -> comum -> ConnectionManager.java
+
+O ficheiro ConnectionManager.java foi feito para criar a conexão com o Jgroups, e nele é possivel encontrar o gossipRouter(), que é ul Tunnel que facilita a conexão com os peers dentro do ambiente docker.
+
+***API peers***
+
+Ficheiro -> src -> Main -> Java -> pt.ipb.dsys.sd -> comum -> peerapi -> PeerAPI.java
+
+Foi criada uma interface API, que mostra e define quais são as funcionalidades que os peers têm a oferecer, e foram usadas tanto no usuario da desktop interface em (...sender -> Funcionalidades_User.java), bem como para o usuario de interface web em (...web -> Funcionalidades_User_Web.java).
+
+***Conversão para Chunks***
+
+Ficheiro -> src -> Main -> Java -> pt.ipb.dsys.sd -> comum -> ficheiros -> Arquivo.java
+
+A classe Arquivo serve para criar o FileID Sha256, e para converter os ficheiros em chunks de 64 bytes, no final  a função "Criar_chunks()" retorna uma List<FileChunk> com todos os chunks do ficheiro para posteriormente ser enviado para os peers.
+
+
 ### Diagramas
 ***Interação Interface Desktop-Peers(Docker)***
-
+<p align="center">
+  <img src="Imagens_Aplicação/Diagrama Desktop.png" alt="OpenMontage" width="700">
+</p> <br/>
 
 <br/>
 
 ***Interação Interface web(Spring boot)-Peers(Docker)***
-
+<p align="center">
+  <img src="Imagens_Aplicação/Diagrama web.png" alt="OpenMontage" width="700">
+</p> <br/>
 
 
 ### Imagens
