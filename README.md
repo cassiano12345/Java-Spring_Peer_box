@@ -23,6 +23,13 @@ Para melhor comunicação entre os usuarios e os peers, foram criadas classes qu
 
 - File_status_peer: A classe foi criada, com objetivo de criar objetos para obter o estado de cada peer, cada objeto da classe contem: Cluster do cliente que fez o pedido, ID_peer(Identificador logico de cada peer), IP do peer, estado do peer(ativo, desativado), numero de ficheiros, e uma String de mensagem.
 
+### Comunicação Jgroups
+
+Ficheiro -> src -> Main -> Java -> pt.ipb.dsys.sd -> comum -> ConnectionManager.java
+
+O ficheiro ConnectionManager.java foi feito para criar a conexão com o Jgroups, e nele é possivel encontrar o gossipRouter(), que é ul Tunnel que facilita a conexão com os peers dentro do ambiente docker.
+
+
 ### Diagramas
 ***Interação Interface Desktop-Peers(Docker)***
 <p align="center">
