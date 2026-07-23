@@ -27,6 +27,7 @@ Para melhor comunicação entre os usuarios e os peers, foram criadas classes qu
 ### Imagens
 
 ***Página interface Web*** <br/>
+
 A imagem a baixo mostra a página principal da interface web, onde é possível ver a caixa de logs, os botões para atualizar a tabela dos peers, e para enviar ficheiros para os peers, mais a baixo é possivel observar a tabela com informação dos peers em ativo.
 <p align="center">
   <img src="Imagens_Aplicação/Pagina web 1.png" alt="OpenMontage" width="700">
@@ -37,6 +38,7 @@ A tabela a baixo mostra a os ficheiros disponiveis nos peers, e mais ao lado tem
 </p>
 
 ***Página interface Desktop*** <br/>
+
 A imagem a baixo mostra a interface desktop, onde é possivel obersar a tabela com os ficheiros presentes nos peers, mais a baixo tem a caixa dos logs, e mais a baixo tem os botões de pesquisar ficheiros no nosso disco, para posteriormente enviar, do mais ao lado tem o botão para pesquisar peers disponiveis, tem o botão para enviar ficheiros, recuperar ficheiros a partir dos peers, apagar ficheiros, e informações locais (que futuramente sera implementado).
 <p align="center">
   <img src="Imagens_Aplicação/Pagina principal desktop.png" alt="OpenMontage" width="700">
